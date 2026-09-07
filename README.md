@@ -62,10 +62,12 @@ gcc -o encode_decode main.c encode.c decode.c -I ../include
 
 ## Usage
 
+> The compiled binary sits in `src/`, while sample files live in `sample_files/`. Run commands from inside `src/` and reference sample files with a relative path (`../sample_files/...`), or copy the sample files into `src/` first.
+
 **Encoding a secret file into an image:**
 
 ```bash
-./encode_decode -e beautiful.bmp secret.txt stego.bmp
+./encode_decode -e ../sample_files/beautiful.bmp ../sample_files/secret.txt stego.bmp
 ```
 
 - `beautiful.bmp` — source cover image
@@ -78,7 +80,7 @@ gcc -o encode_decode main.c encode.c decode.c -I ../include
 ./encode_decode -d stego.bmp output.txt
 ```
 
-- `stego.bmp` — image containing hidden data
+- `stego.bmp` — image containing hidden data (generated in the previous step, sits alongside the binary in `src/`)
 - `output.txt` — (optional) output file for the recovered secret; defaults to `decode.txt` if omitted
 
 > Note: Update the exact flag names/argument order above if your `main.c` parses them differently — adjust this section to match your actual `argv` handling.
