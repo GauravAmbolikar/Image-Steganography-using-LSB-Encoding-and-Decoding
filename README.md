@@ -14,19 +14,18 @@ A command-line tool written in C that hides (encodes) and extracts (decodes) sec
 
 ```
 Gaurav_Ambolikar_/
-├── include/
-│   ├── common.h      # Shared macros, structs, and status codes
-│   ├── decode.h       # Decoding function declarations
-│   ├── encode.h       # Encoding function declarations
-│   └── types.h        # Common type definitions (e.g. Status enum)
-├── sample_files/
-│   ├── beautiful.bmp  # Sample cover image
-│   └── secret.txt     # Sample secret message file
-└── src/
-    ├── encode.c        # Encoding logic (LSB embedding)
-    ├── decode.c        # Decoding logic (LSB extraction)
-    └── main.c          # Entry point — parses CLI args, dispatches encode/decode
+├── common.h        # Shared macros, structs, and status codes
+├── decode.h        # Decoding function declarations
+├── encode.h        # Encoding function declarations
+├── types.h         # Common type definitions (e.g. Status enum)
+├── encode.c        # Encoding logic (LSB embedding)
+├── decode.c        # Decoding logic (LSB extraction)
+├── main.c          # Entry point — parses CLI args, dispatches encode/decode
+├── beautiful.bmp   # Sample cover image
+└── secret.txt      # Sample secret message file
 ```
+
+All source files, headers, and sample files sit together in one folder for simplicity, so the binary can reference them without relative paths.
 
 ## How It Works
 
@@ -45,7 +44,7 @@ Gaurav_Ambolikar_/
 
 ### Magic String
 
-A magic string constant (defined in `include/common.h`) is embedded at the very start of the encoded data. During decoding, this string is the first thing extracted and compared against the expected value — if it doesn't match, decoding stops immediately, since the image either isn't a stego image or wasn't encoded by this tool.
+A magic string constant (defined in `common.h`) is embedded at the very start of the encoded data. During decoding, this string is the first thing extracted and compared against the expected value — if it doesn't match, decoding stops immediately, since the image either isn't a stego image or wasn't encoded by this tool.
 
 ## Prerequisites
 
@@ -54,20 +53,18 @@ A magic string constant (defined in `include/common.h`) is embedded at the very 
 
 ## Build
 
-From the `src/` directory:
+From inside the project folder:
 
 ```bash
-gcc -o encode_decode main.c encode.c decode.c -I ../include
+gcc -o encode_decode main.c encode.c decode.c
 ```
 
 ## Usage
 
-> The compiled binary sits in `src/`, while sample files live in `sample_files/`. Run commands from inside `src/` and reference sample files with a relative path (`../sample_files/...`), or copy the sample files into `src/` first.
-
 **Encoding a secret file into an image:**
 
 ```bash
-./encode_decode -e ../sample_files/beautiful.bmp ../sample_files/secret.txt stego.bmp
+./encode_decode -e beautiful.bmp secret.txt stego.bmp
 ```
 
 - `beautiful.bmp` — source cover image
@@ -80,14 +77,14 @@ gcc -o encode_decode main.c encode.c decode.c -I ../include
 ./encode_decode -d stego.bmp output.txt
 ```
 
-- `stego.bmp` — image containing hidden data (generated in the previous step, sits alongside the binary in `src/`)
+- `stego.bmp` — image containing hidden data (generated in the previous step)
 - `output.txt` — (optional) output file for the recovered secret; defaults to `decode.txt` if omitted
 
 > Note: Update the exact flag names/argument order above if your `main.c` parses them differently — adjust this section to match your actual `argv` handling.
 
 ## Sample Files
 
-The `sample_files/` folder includes a sample `beautiful.bmp` cover image and a `secret.txt` message so you can test encoding/decoding right away.
+The project folder includes a sample `beautiful.bmp` cover image and a `secret.txt` message so you can test encoding/decoding right away.
 
 ## Author
 

@@ -241,7 +241,7 @@ Status do_encoding(EncodeInfo *encInfo)
             if(encode_magic_string(MAGIC_STRING, encInfo) == e_success)
             {
                 printf("Info:: Magic string encode successfully\n");
-                strcpy(encInfo->extn_secret_file , strstr(encInfo->secret_fname , "."));
+                strcpy(encInfo->extn_secret_file , strrchr(encInfo->secret_fname , "."));
                 if(encode_secret_file_extn_size(strlen(encInfo->extn_secret_file), encInfo) == e_success)
                 {
                     printf("Info:: Encoded secret file extn size successfully\n");
